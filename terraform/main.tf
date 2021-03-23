@@ -1,7 +1,6 @@
 module "naming" {
   source      = "Azure/naming/azurerm"
   suffix      = ["abpi"]
-  unique-seed = "abpi"
 }
 resource "azurerm_resource_group" "example" {
   name     = module.naming.resource_group.name
@@ -10,7 +9,7 @@ resource "azurerm_resource_group" "example" {
 }
 
 resource "azurerm_storage_account" "example" {
-  name                     = module.naming.storage_account.name_unique
+  name                     = "stabpiblob"
   resource_group_name      = azurerm_resource_group.example.name
   location                 = azurerm_resource_group.example.location
   account_tier             = "Standard"
@@ -36,7 +35,6 @@ resource "azurerm_app_service_plan" "example" {
   location            = azurerm_resource_group.example.location
   resource_group_name = azurerm_resource_group.example.name
   tags                = var.tags
-  kind                = "Linux"
 
 
   sku {
@@ -61,7 +59,7 @@ resource "azurerm_app_service" "example" {
 }
 
 resource "azurerm_storage_account" "functions" {
-  name                     = "stabpifunctions"
+  name                     = "stabpifunction"
   resource_group_name      = azurerm_resource_group.example.name
   location                 = azurerm_resource_group.example.location
   account_tier             = "Standard"
